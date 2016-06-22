@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Photo Gallery", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="/album/useralbums">Your albums</a></li>
+                        <li><a href="/photo/userphotos">Your photos</a></li>
+                        <li><a href="/album/add">Add New Album</a></li>
+                        <li><a href="/photo/add" id="addPhotoLink">Add New Photo</a></li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+<div class="container body-content">
+    <div class="row">
+        <div class="simple-search margin-bottom">
+            <div class="form-group">
+                <form id="simpleSearchForm" name="simpleSearchForm" action="/search/search" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="col-sm-3">
+                        <input name="title" type="text" class="form-control" required/>
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="submit" class="btn btn-default" value="Search"/>
+                    </div>
+                </form>
+                <div class="col-sm-8">
+                    <button data-toggle="collapse" data-target="#advancedSearchBlock" class="btn btn-default">Advanced Search</button>
+                </div>
+            </div>
+        </div>
+        <div id="advancedSearchBlock" class="collapse">
+                @Html.Partial("~/Views/Search/AdvancedSearchForm.cshtml", new PhotoG.DAL.Entities.AdvancedSearchModel())
+        </div>
+    </div>
+    @RenderBody()
+</div>
+
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 class="error-message"></h3>
+                    <h3 class="text-info"></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="showDirectLink" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Direct link to album</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-center">
+                        <span class="direct-link"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    @Html.Partial("~/Views/Photo/Add.cshtml", new PhotoG.UI.Models.PhotoModel())
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/underscore")
+    @Scripts.Render("~/app")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

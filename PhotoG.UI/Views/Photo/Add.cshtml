@@ -1,0 +1,21 @@
+﻿@model PhotoG.UI.Models.PhotoModel
+
+<div class="modal fade" id="addPhotoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title">Add new photo</h2>
+                <div class="row">
+                    <h3 class="col-sm-6 error-message">@TempData["Message"]</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form id="addPhotoForm" name="addPhotoForm" action="/photo/add" method="post">
+                    @Html.Partial("~/Views/Photo/PhotoForm.cshtml", Model)
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

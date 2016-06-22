@@ -1,0 +1,37 @@
+﻿@model IEnumerable<PhotoG.DAL.Entities.Album>
+
+<div class="modal fade" id="linkPhotoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title">Link photo to selected album</h2>
+                <div class="row">
+                    <h3 class="col-sm-6 error-message"></h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form id="linkPhotoForm" name="linkPhotoForm" action="/photo/linkto" method="post">
+                    <ul class="input-list">
+                        <li>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Select album</label>
+                                <div class="col-sm-8 margin-bottom no-padding">
+                                    <select id="AlbumId" class="form-control">
+                                        @foreach (var album in Model)
+                                        {
+                                            <option value="@album.AlbumId">@album.Title</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <button type="submit" class="btn btn-primary btn-block">Link Photo</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

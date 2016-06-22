@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PhotoG.DAL.Entities.Album>
+
+<div class="row">
+    @foreach (var album in Model)
+    {
+        <div class="col-md-4  text-center">
+            <div class="item-block">
+                <a href="/album/photos/@album.AlbumId" class="title-container" data-id="@album.AlbumId">
+                    <img src="../../Content/Images/ajax-loader.gif" class="image-loader" />
+                </a>
+                <p>@album.Title</p>
+                <p>@album.Description</p>
+                <button class="btn btn-default get-link-button" data-toggle="modal" data-target="#showDirectLink"
+                        data-url="@($"{HttpContext.Current.Request.Url.Scheme}://" +
+                                    $"{HttpContext.Current.Request.Url.Host}:" +
+                                    $"{HttpContext.Current.Request.Url.Port}/album/title/" +
+                                    $"{album.DirectUrl}")">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;Get Link
+                </button>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,35 @@
+﻿body { padding-top: 50px; padding-bottom: 20px; }
+
+/* Set padding to keep content from hitting the edges */
+.body-content { padding-left: 15px; padding-right: 15px; }
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt { white-space: normal; }
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea { max-width: 280px; }
+
+.add-new-btn{ margin-bottom: 15px;}
+img { max-width: 90%;}
+.img-responsive { margin: 0 auto; }
+.image-small { max-width: 90%;margin: 15px 0;}
+.image-medium { max-width: 100%; margin: 15px 0;}
+.image-large { width: auto; margin-top: 15px; margin: 15px 0;}
+.image-loader{ padding: 101px;}
+
+.input-list{list-style: none;margin: 0 -10px;padding: 0;}
+
+.no-padding{ padding: 0;}
+.margin-bottom{margin-bottom: 15px}
+.error-message{ color: red !important;}
+
+.photo-list-container{ margin: 15px 0;}
+
+.text-info, .error-message{margin-left: 30px;}
+
+.item-block{background-color: #cccccc;border-radius: 4px;margin-top: 15px;padding-bottom: 15px;}
+.advanced-search{ background-color: #cccccc;border-radius: 4px;padding: 15px 0;margin: 15px 0;}

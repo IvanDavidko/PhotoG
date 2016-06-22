@@ -1,0 +1,14 @@
+﻿@model PhotoG.UI.Models.PhotoModel
+
+<div class="text-center">
+    <h2 class="first">Edit Photo Details</h2>
+    <div class="row">
+        <h3 class="error-message">@TempData["Message"]</h3>
+    </div>
+    <div class="row error-message">
+        @Html.ValidationSummary()
+    </div>
+    <form name="EditPhotoForm" action="/photo/edit" method="post" enctype = "multipart/form-data">
+        @Html.Partial("PhotoForm", Model)
+    </form>
+</div>

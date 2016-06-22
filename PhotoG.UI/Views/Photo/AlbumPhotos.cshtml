@@ -1,0 +1,26 @@
+﻿@model int[]
+@{
+    var albumId = ViewBag.AlbumId ?? 0;
+    var isUserOwner = ViewBag.IsUserOwner ?? false;
+}
+<div class="row">
+    <h3 class="text-info">@TempData["Message"]</h3>
+</div>
+<div class="row photo-list-container">
+    @foreach (var photoId in Model)
+    {
+        <div class="col-md-4 text-center">
+            <div class="photo-container" data-id="@photoId">
+                <img src="../../Content/Images/ajax-loader.gif" class="image-loader" />
+            </div>
+            <a href="/photo/details/@photoId" class="btn btn-default">See details...</a>
+            @if (User.Identity.IsAuthenticated && isUserOwner)
+            {
+                <a href="/photo/unlinkphoto/@albumId/@photoId/"
+                   onclick="if (!confirm('Are you sure?')) return false;" class="btn btn-default">Unlink</a>
+                <a href="/photo/changealbumtitlephoto" class="btn btn-default make-title-photo"
+                   data-album-id="@albumId" data-photo-id="@photoId">Make Album Title</a>
+            }
+        </div>
+    }
+</div>

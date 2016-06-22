@@ -1,0 +1,103 @@
+﻿@model PhotoG.UI.Models.PhotoModel
+
+@Html.AntiForgeryToken()
+
+@if (Model?.Image != null)
+{
+    <div class="form-group">
+        <img class="img-responsive image-large" src="@($"data:{Model.ImageType};base64,{Convert.ToBase64String(Model.Image)}")" alt="title image" />
+    </div>
+}
+
+@Html.HiddenFor(x => x.PhotoId)
+<ul class="input-list">
+    <li>
+        <div class="form-group">
+            <label class="col-sm-4 ">Image to upload</label>
+            <div class="col-sm-8 margin-bottom no-padding">
+                <input id="ImageToUpload" name="ImageToUpload" type="file" class="form-control">
+            </div>
+        </div>
+    </li>
+
+    <li>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Title, new { @class = "col-sm-4 " })
+            <div class="col-sm-8 margin-bottom no-padding">
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="form-group">
+            @Html.LabelFor(x => x.CameraModel, new { @class = "col-sm-4 " })
+            <div class="col-sm-8 margin-bottom no-padding">
+                @Html.TextBoxFor(model => model.CameraModel, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.CameraModel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="form-group">
+            @Html.LabelFor(x => x.PhotosetDate, new { @class = "col-sm-4 " })
+            <div class="col-sm-8 margin-bottom no-padding">
+                @*@Html.EditorFor(model => model.PhotosetDate, new { htmlAttributes = new { @class = "form-control" } })*@
+                <input id="PhotosetDate" name="PhotosetDate" class="form-control datepicker"/>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="form-group">
+            @Html.LabelFor(x => x.LensFocalLength, new { @class = "col-sm-4 " })
+            <div class="col-sm-8 margin-bottom no-padding">
+                <input type="number" step="0.01" class="form-control"
+                       name="LensFocalLength" value="@(Model?.LensFocalLength)">
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Diaphragm, new { @class = "col-sm-4 " })
+            <div class="col-sm-8 margin-bottom no-padding">
+                @Html.TextBoxFor(model => model.Diaphragm, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Diaphragm, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="form-group">
+            @Html.LabelFor(x => x.ShutterSpeed, new { @class = "col-sm-4 " })
+            <div class="col-sm-8 margin-bottom no-padding">
+                <input type="number" step="0.01" class="form-control"
+                       name="ShutterSpeed" value="@(Model?.ShutterSpeed)">
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="form-group">
+            @Html.LabelFor(x => x.ISO, new { @class = "col-sm-4 " })
+            <div class="col-sm-8 margin-bottom no-padding">
+                <input type="number" step="0.01" class="form-control"
+                       name="ISO" value="@(Model?.ISO)">
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="form-group">
+            @Html.LabelFor(x => x.FlashInUse, new { @class = "col-sm-4 " })
+            <div class="col-sm-8 margin-bottom no-padding">
+                @if (Model != null && Model.FlashInUse == null)
+                {
+                    Model.FlashInUse = false;
+                }
+                <input type="checkbox" class="form-control" onchange="$('#addPhotoForm #FlashInUse').val($(this).prop('checked'));" @(Model.FlashInUse.Value ? "checked=\"checked\"" : "")/>
+                <input type="hidden" id="FlashInUse" name="FlashInUse" @(Model.FlashInUse.Value ? "value=\"true\"" : "")/>
+            </div>
+        </div>
+    </li>
+    <li>
+        <button type="submit" class="btn btn-primary btn-block">Save</button>
+    </li>
+</ul>
+

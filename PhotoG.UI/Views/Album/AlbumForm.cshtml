@@ -1,0 +1,36 @@
+﻿@model PhotoG.UI.Models.AlbumModel
+
+<h1>@ViewBag.Title</h1>
+
+<div class="row">
+    <h3 class="text-info">@ViewBag.Message</h3>
+</div>
+
+@if (ViewBag.CanUserAddAlbums)
+{
+    <div class="row">
+        <div class="col-md-8">
+            @using (Html.BeginForm("InsertOrUpdate", "Album", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Title)
+                    @Html.TextBoxFor(x => x.Title, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.Title, "", new {@class = "text-danger"})
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Description)
+                    @Html.TextBoxFor(x => x.Description, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.Description, "", new {@class = "text-danger"})
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="submit" value="Submit" class="btn btn-primary"/>
+                    </div>
+                </div>
+                @Html.HiddenFor(x => x.AlbumId)
+            }
+        </div>
+    </div>
+}

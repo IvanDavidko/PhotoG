@@ -1,0 +1,23 @@
+﻿@model PhotoG.DAL.Entities.Album
+
+@if (ViewBag.Message != null)
+{
+    <div class="row">
+        <h3 class="text-info">@ViewBag.Message</h3>
+    </div>
+}
+else
+{
+    <div class="row">
+        <h1>@Model.Title</h1>
+        <h3>@Model.Description</h3>
+    </div>
+    <div class="row">
+        @foreach (var photoId in Model.AlbumPhotos)
+        {
+            <div class="col-md-4 photo-container" data-id="@photoId">
+                <img src="../../Content/Images/ajax-loader.gif" class="img-responsive image-medium"/>
+            </div>
+        }
+    </div>
+}
