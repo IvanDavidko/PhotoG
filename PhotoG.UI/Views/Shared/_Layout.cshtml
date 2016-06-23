@@ -27,6 +27,14 @@
                         <li><a href="/photo/userphotos">Your photos</a></li>
                         <li><a href="/album/add">Add New Album</a></li>
                         <li><a href="/photo/add" id="addPhotoLink">Add New Photo</a></li>
+                        if (User.IsInRole(PhotoG.Infrastructure.Identity.Roles.Base.ToString()))
+                        {                            
+                            <li><a href="/account/MakeUserPremium">Make User Premium</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="/account/MakeUserBase">Make User Base</a></li>
+                        }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

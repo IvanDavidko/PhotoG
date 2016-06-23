@@ -137,14 +137,10 @@ namespace PhotoG.UI.Controllers
                 if (result.Succeeded)
                 {
                     _logger.Info("New registered user {0}", model.Email);
+
+                    await _userManager.AddToRoleAsync(user.Id, Roles.Base.ToString());
                     await _signInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await _userManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -153,6 +149,44 @@ namespace PhotoG.UI.Controllers
             _logger.Info("Registretion failed for {0}", model.Email);
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public async Task<ActionResult> MakeUserBase()
+        {
+            var userId = User.Identity.GetUserId();
+            var result = await _userManager.RemoveFromRoleAsync(userId, Roles.Premium.ToString());
+
+            if (!result.Succeeded) return RedirectToAction("Index", "Home");
+
+            var res = await _userManager.AddToRoleAsync(userId, Roles.Base.ToString());
+            if (res.Succeeded)
+            {
+                var appUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                var newIdentity = await appUser.GenerateUserIdentityAsync(_userManager);
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                AuthenticationManager.SignIn(newIdentity);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<ActionResult> MakeUserPremium()
+        {
+            var userId = User.Identity.GetUserId();
+            var result = await _userManager.RemoveFromRoleAsync(userId, Roles.Base.ToString());
+
+            if (!result.Succeeded) return RedirectToAction("Index", "Home");
+
+            var res = await _userManager.AddToRoleAsync(userId, Roles.Premium.ToString());
+            if (res.Succeeded)
+            {
+                var appUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                var newIdentity = await appUser.GenerateUserIdentityAsync(_userManager);
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                AuthenticationManager.SignIn(newIdentity);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         //
